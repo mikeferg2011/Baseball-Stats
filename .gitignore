@@ -1,2 +1,4 @@
 .csv
 .venv
+*.zip
+sa_key.json
