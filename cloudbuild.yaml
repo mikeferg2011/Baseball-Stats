@@ -6,7 +6,8 @@ steps:
   - deploy
   - myFirstWorkflow
   - --source=myfirstworkflow.yaml
-  - --service-account=baseball-434300@appspot.gserviceaccount.com
+  - --service-account=baseball-prod@baseball-434300.iam.gserviceaccount.com
+  # - --service-account=baseball-434300@appspot.gserviceaccount.com
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   args:
   - gcloud
@@ -18,6 +19,7 @@ steps:
   - --trigger-http
   - --runtime=python311
   - --entry-point=hello_get
-  - --service-account=baseball-434300@appspot.gserviceaccount.com
+  - --service-account=baseball-prod@baseball-434300.iam.gserviceaccount.com
+  # - --service-account=baseball-434300@appspot.gserviceaccount.com
 options:
   logging: CLOUD_LOGGING_ONLY
