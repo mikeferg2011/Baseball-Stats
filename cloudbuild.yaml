@@ -5,7 +5,7 @@ steps:
   - workflows
   - deploy
   - myFirstWorkflow
-  - --source=myFirstWorkflow.yaml
+  - --source=myfirstworkflow.yaml
   - --service-account=baseball-434300@appspot.gserviceaccount.com
 options:
   logging: CLOUD_LOGGING_ONLY
