@@ -7,6 +7,8 @@ steps:
   - myFirstWorkflow
   - --source=myFirstWorkflow.yaml
   - --service-account=baseball-434300@appspot.gserviceaccount.com
+options:
+  logging: CLOUD_LOGGING_ONLY
 # - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
 #   args:
 #   - gcloud
