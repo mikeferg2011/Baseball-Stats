@@ -1,0 +1,21 @@
+steps:
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  args:
+  - gcloud
+  - workflows
+  - deploy
+  - myFirstWorkflow
+  - --source=myFirstWorkflow.yaml
+  - --service-account=baseball-434300@appspot.gserviceaccount.com
+# - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+#   args:
+#   - gcloud
+#   - functions
+#   - deploy
+#   - sample_function
+#   - --region=us-central1
+#   - --source=./sample_function
+#   - --trigger-http
+#   - --runtime=python311
+#   - --entry-point=hello_get
+#   - --service-account=baseball-434300@appspot.gserviceaccount.com
