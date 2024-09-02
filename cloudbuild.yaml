@@ -18,6 +18,6 @@ steps:
   - --trigger-http
   - --runtime=python311
   - --entry-point=hello_get
-  - --service-account="projects/baseball-434300/serviceAccounts/baseball-434300@appspot.gserviceaccount.com"
+  - --service-account=baseball-434300@appspot.gserviceaccount.com
 options:
   logging: CLOUD_LOGGING_ONLY
