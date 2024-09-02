@@ -22,6 +22,10 @@ steps:
   - cloudfunctions.googleapis.com
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   args:
+  - sleep
+  - 60
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  args:
   - gcloud
   - functions
   - deploy
