@@ -10,10 +10,16 @@ steps:
   # - --service-account=baseball-434300@appspot.gserviceaccount.com
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   args:
-  - ['gcloud services disable cloudfunctions.googleapis.com']
+  - gcloud
+  - services
+  - disable
+  - cloudfunctions.googleapis.com
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   args:
-  - ['gcloud services enable cloudfunctions.googleapis.com']
+  - gcloud
+  - services
+  - enable
+  - cloudfunctions.googleapis.com
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   args:
   - gcloud
