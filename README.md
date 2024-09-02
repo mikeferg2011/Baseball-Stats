@@ -29,8 +29,13 @@ pip install -r requirements.txt
 
 ## Initial Project setup steps
 1. Create project
-2. Enable APIs and set roles with `gcloud_api_commands.sh`
-3. Create BigQuery dataset (schema) with `bigquery_setup.py`
-4. Deploy workflow that runs python scripts to load data `some shell command`
+2. Connect git repo to gloud build triggers [link](https://cloud.google.com/build/docs/automating-builds/create-manage-triggers)
+3. Enable APIs and set roles with `gcloud_api_commands.sh`
+   1. Enable APIs
+   2. Set Roles for service account
+   3. Get service account key for local bigquery setup
+   4. Create trigger for GitHub pushes
+4. Create BigQuery dataset (schema) with `bigquery_setup.py`
+5. Deploy workflow that runs python scripts to load data `some shell command`
    1. try to get this to run via CI/CD
-5. 
+6. 
