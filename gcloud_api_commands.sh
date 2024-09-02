@@ -1,5 +1,6 @@
 ## declare an array variable
-declare -a arr=("workflows.googleapis.com" 
+declare -a arr=("cloudresourcemanager.googleapis.com"
+                "workflows.googleapis.com" 
                 "bigquery.googleapis.com"
                 "cloudfunctions.googleapis.com"
                 "cloudbuild.googleapis.com"
