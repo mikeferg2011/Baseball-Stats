@@ -49,5 +49,6 @@ steps:
   - --runtime=python311
   - --entry-point=load_people
   - --service-account=baseball-prod@baseball-434300.iam.gserviceaccount.com
+  - --run-service-account=baseball-prod@baseball-434300.iam.gserviceaccount.com
 options:
   logging: CLOUD_LOGGING_ONLY
