@@ -36,8 +36,6 @@ steps:
   - --runtime=python311
   - --entry-point=hello_get
   - --service-account=baseball-prod@baseball-434300.iam.gserviceaccount.com
-  - --run-service-account=baseball-prod@baseball-434300.iam.gserviceaccount.com
-  # - --service-account=baseball-434300@appspot.gserviceaccount.com
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   args:
   - gcloud
@@ -50,7 +48,5 @@ steps:
   - --runtime=python311
   - --entry-point=load_people
   - --service-account=baseball-prod@baseball-434300.iam.gserviceaccount.com
-  - --run-service-account=baseball-prod@baseball-434300.iam.gserviceaccount.com
-  # - --service-account=baseball-434300@appspot.gserviceaccount.com
 options:
   logging: CLOUD_LOGGING_ONLY
