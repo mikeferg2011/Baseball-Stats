@@ -38,7 +38,7 @@ steps:
   - --service-account=baseball-prod@baseball-434300.iam.gserviceaccount.com
   - --run-service-account=baseball-prod@baseball-434300.iam.gserviceaccount.com
   # - --service-account=baseball-434300@appspot.gserviceaccount.com
-name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   args:
   - gcloud
   - functions
