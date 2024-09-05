@@ -25,7 +25,7 @@ def hello_get(request):
     return "Hello World!"
 
 @functions_framework.http
-def load_people():
+def load_people(request):
     resp = urlopen(f'{BASE_URL}/biofile.zip')
     myzip = zipfile.ZipFile(BytesIO(resp.read()))
     print(myzip.namelist())

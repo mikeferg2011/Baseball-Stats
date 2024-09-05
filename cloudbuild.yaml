@@ -41,7 +41,7 @@ steps:
   - gcloud
   - functions
   - deploy
-  - sample_function
+  - load_people
   - --region=us-central1
   - --source=./bigquery_loader
   - --trigger-http
