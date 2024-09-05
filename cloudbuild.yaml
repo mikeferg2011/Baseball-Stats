@@ -29,7 +29,7 @@ steps:
   - gcloud
   - functions
   - deploy
-  - sample_function
+  - sample_function_2
   - --region=us-central1
   - --source=./bigquery_loader
   - --trigger-http
