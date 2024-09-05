@@ -36,6 +36,7 @@ steps:
   - --runtime=python311
   - --entry-point=hello_get
   - --service-account=baseball-prod@baseball-434300.iam.gserviceaccount.com
+  - --gen2
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   args:
   - gcloud
