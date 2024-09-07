@@ -43,7 +43,6 @@ def load_people(request):
         # open the csv file in the dataset
         with z.open("biofile0.csv") as f:
             df = pd.read_csv(f)
-            print(df.head())
             col_list = [
                 'id', 'lastname', 'usename', 'fullname',
                 'birthdate', 'birthcity', 'birthstate', 'birthcountry',
@@ -77,5 +76,5 @@ def load_people(request):
 
             df.debut_player = convert_num_to_date(df.debut_player)
             df.last_player = convert_num_to_date(df.last_player)
-            pandas_gbq.to_gbq(df, 'retrosheets.biofile0', project_id=PROJECT_ID, if_exists='replace')
+            pandas_gbq.to_gbq(df, 'retrosheets.persons', project_id=PROJECT_ID, if_exists='replace')
             return ("People loaded successfully")
