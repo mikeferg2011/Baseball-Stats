@@ -38,18 +38,18 @@ steps:
   - --service-account=baseball-prod@baseball-434918.iam.gserviceaccount.com
   - --run-service-account=baseball-prod@baseball-434918.iam.gserviceaccount.com
   - --memory=512MB
-# - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-#   args:
-#   - gcloud
-#   - functions
-#   - deploy
-#   - load_people
-#   - --region=us-central1
-#   - --source=./bigquery_loader
-#   - --trigger-http
-#   - --runtime=python311
-#   - --entry-point=load_people
-#   - --service-account=baseball-prod@baseball-434300.iam.gserviceaccount.com
-#   - --run-service-account=baseball-prod@baseball-434300.iam.gserviceaccount.com
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  args:
+  - gcloud
+  - functions
+  - deploy
+  - load_people
+  - --region=us-central1
+  - --source=./bigquery_loader
+  - --trigger-http
+  - --runtime=python311
+  - --entry-point=load_people
+  - --service-account=baseball-prod@baseball-434918.iam.gserviceaccount.com
+  - --run-service-account=baseball-prod@baseball-434918.iam.gserviceaccount.com
 options:
   logging: CLOUD_LOGGING_ONLY
