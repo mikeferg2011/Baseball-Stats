@@ -133,3 +133,23 @@ def load_ballparks(request):
             df.end_dt = pd.to_datetime(df.end_dt, format='%m/%d/%Y').astype('str').replace('NaT', None)
             pandas_gbq.to_gbq(df, 'retrosheets.ballparks', project_id=PROJECT_ID, if_exists='replace')
             return ("Stadiums loaded successfully")
+
+@functions_framework.http
+def load_teams(request):
+    resp = urlopen(f'{BASE_URL}/teams.zip')
+    myzip = zipfile.ZipFile(BytesIO(resp.read()))
+    print(myzip.namelist())
+    with myzip as z:
+        # open the csv file in the dataset
+        with z.open("teams.csv") as f:
+            df = pd.read_csv(f)
+            df = df.rename(columns={
+                'TEAM': 'team_id',
+                'LEAGUE': 'league',
+                'CITY': 'city',
+                'NICKNAME': 'nickname',
+                'FIRST': 'first_year',
+                'LAST': 'last_year',
+            })
+            pandas_gbq.to_gbq(df, 'retrosheets.teams', project_id=PROJECT_ID, if_exists='replace')
+            return ("Teams loaded successfully")
