@@ -6,6 +6,7 @@ import pandas as pd
 import pandas_gbq
 
 BASE_URL = 'https://www.retrosheet.org'
+PROJECT_ID = 'baseball-434918'
 
 @functions_framework.http
 def hello_get(request):
@@ -34,4 +35,4 @@ def load_people(request):
         with z.open("biofile0.csv") as f:
             train = pd.read_csv(f)
             print(train.head())
-            pandas_gbq.to_gbq(train, 'retrosheets.biofile0', project_id='baseball-434300', if_exists='replace')
+            pandas_gbq.to_gbq(train, 'retrosheets.biofile0', project_id=PROJECT_ID, if_exists='replace')
