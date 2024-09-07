@@ -12,7 +12,8 @@ PROJECT_ID = 'baseball-434918'
 def convert_num_to_date(df_series):
     temp_series = df_series.astype('Int64').astype('str')
     temp_series = pd.to_datetime(temp_series, format="%Y%m%d", errors='coerce')
-    return (temp_series.dt.date)
+    temp_series = temp_series.dt.date.astype('str').replace('NaT', None)
+    return (temp_series)
 
 
 @functions_framework.http
