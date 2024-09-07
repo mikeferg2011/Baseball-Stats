@@ -8,6 +8,13 @@ import pandas_gbq
 BASE_URL = 'https://www.retrosheet.org'
 PROJECT_ID = 'baseball-434918'
 
+
+def convert_num_to_date(df_series):
+    temp_series = df_series.astype('Int64').astype('str')
+    temp_series = pd.to_datetime(temp_series, format="%Y%m%d", errors='coerce')
+    return (temp_series.dt.date)
+
+
 @functions_framework.http
 def hello_get(request):
     """HTTP Cloud Function.
@@ -25,6 +32,7 @@ def hello_get(request):
     """
     return "Hello World!"
 
+
 @functions_framework.http
 def load_people(request):
     resp = urlopen(f'{BASE_URL}/biofile.zip')
@@ -33,6 +41,40 @@ def load_people(request):
     with myzip as z:
         # open the csv file in the dataset
         with z.open("biofile0.csv") as f:
-            train = pd.read_csv(f)
-            print(train.head())
-            pandas_gbq.to_gbq(train, 'retrosheets.biofile0', project_id=PROJECT_ID, if_exists='replace')
+            df = pd.read_csv(f)
+            print(df.head())
+            col_list = [
+                'id', 'lastname', 'usename', 'fullname',
+                'birthdate', 'birthcity', 'birthstate', 'birthcountry',
+                'deathdate', 'deathcity', 'deathstate', 'deathcountry',
+                # 'cemetery', 'cem_city', 'cem_state', 'cem_ctry', 'cem_note',
+                'birthname', 'altname',
+                'debut_p', 'last_p',
+                # 'debut_c', 'last_c',
+                # 'debut_m', 'last_m',
+                # 'debut_u', 'last_u',
+                'bats', 'throws',
+                'height', 'weight',
+                'HOF'
+            ]
+
+            df = df[col_list]
+
+            df = df.rename(columns={
+                'id': 'id', 'lastname': 'last_name', 'usename': 'first_name', 'fullname': 'full_name',
+                'birthdate': 'birth_date', 'birthcity': 'birth_city', 'birthstate': 'birth_state', 'birthcountry': 'birth_country',
+                'deathdate': 'death_date', 'deathcity': 'death_city', 'deathstate': 'death_state', 'deathcountry': 'death_country',
+                'birthname': 'birth_name', 'altname': 'alt_name',
+                'debut_p': 'debut_player', 'last_p': 'last_player',
+                'bats': 'bats', 'throws': 'throws',
+                'height': 'height', 'weight': 'weight',
+                'HOF': 'hof',
+            })
+
+            df.birth_date = convert_num_to_date(df.birth_date)
+            df.death_date = convert_num_to_date(df.death_date)
+
+            df.debut_player = convert_num_to_date(df.debut_player)
+            df.last_player = convert_num_to_date(df.last_player)
+            pandas_gbq.to_gbq(df, 'retrosheets.biofile0', project_id=PROJECT_ID, if_exists='replace')
+            return ("People loaded successfully")
