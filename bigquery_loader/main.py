@@ -4,6 +4,7 @@ import zipfile
 from io import BytesIO
 import pandas as pd
 import pandas_gbq
+from markupsafe import escape
 
 BASE_URL = 'https://www.retrosheet.org'
 PROJECT_ID = 'baseball-434918'
@@ -32,6 +33,35 @@ def hello_get(request):
         <https://cloud.google.com/functions/docs/writing/http#http_frameworks>
     """
     return "Hello World!"
+
+@functions_framework.http
+def hello_content(request):
+    """Responds to an HTTP request using data from the request body parsed
+    according to the "content-type" header.
+    Args:
+        request (flask.Request): The request object.
+        <https://flask.palletsprojects.com/en/1.1.x/api/#incoming-request-data>
+    Returns:
+        The response text, or any set of values that can be turned into a
+        Response object using `make_response`
+        <https://flask.palletsprojects.com/en/1.1.x/api/#flask.make_response>.
+    """
+    content_type = request.headers["content-type"]
+    if content_type == "application/json":
+        request_json = request.get_json(silent=True)
+        if request_json and "name" in request_json:
+            name = request_json["name"]
+        else:
+            raise ValueError("JSON is invalid, or missing a 'name' property")
+    elif content_type == "application/octet-stream":
+        name = request.data
+    elif content_type == "text/plain":
+        name = request.data
+    elif content_type == "application/x-www-form-urlencoded":
+        name = request.form.get("name")
+    else:
+        raise ValueError(f"Unknown content type: {content_type}")
+    return f"Hello {escape(name)}!"
 
 
 @functions_framework.http
@@ -78,3 +108,28 @@ def load_people(request):
             df.last_player = convert_num_to_date(df.last_player)
             pandas_gbq.to_gbq(df, 'retrosheets.persons', project_id=PROJECT_ID, if_exists='replace')
             return ("People loaded successfully")
+
+@functions_framework.http
+def load_ballparks(request):
+    resp = urlopen(f'{BASE_URL}/ballparks.zip')
+    myzip = zipfile.ZipFile(BytesIO(resp.read()))
+    print(myzip.namelist())
+    with myzip as z:
+        # open the csv file in the dataset
+        with z.open("ballparks.csv") as f:
+            df = pd.read_csv(f)
+            df = df.rename(columns={
+                'PARKID': 'park_id',
+                'NAME': 'name',
+                'AKA': 'alt_names',
+                'CITY': 'city',
+                'STATE': 'state',
+                'START': 'start_dt',
+                'END': 'end_dt',
+                'LEAGUE': 'league',
+                'NOTES': 'notes',
+            })
+            df.start_dt = pd.to_datetime(df.start_dt, format='%m/%d/%Y').astype('str').replace('NaT', None)
+            df.end_dt = pd.to_datetime(df.end_dt, format='%m/%d/%Y').astype('str').replace('NaT', None)
+            pandas_gbq.to_gbq(df, 'retrosheets.ballparks', project_id=PROJECT_ID, if_exists='replace')
+            return ("Stadiums loaded successfully")
