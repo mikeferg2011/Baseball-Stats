@@ -2,7 +2,7 @@ import os
 from google.cloud import bigquery
 
 # to authenticate as service account
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = f'{os.getcwd}/sa_key.json'
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = f'{os.getcwd()}/sa_key.json'
 
 # Construct a BigQuery client object.
 client = bigquery.Client()
