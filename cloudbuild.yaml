@@ -18,7 +18,7 @@ steps:
   - --source=./bigquery_loader
   - --trigger-http
   - --runtime=python311
-  - --entry-point=hello_get
+  - --entry-point=hello_content
   - --service-account=baseball-prod@baseball-434918.iam.gserviceaccount.com
   - --run-service-account=baseball-prod@baseball-434918.iam.gserviceaccount.com
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'

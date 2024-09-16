@@ -22,9 +22,6 @@ def write_to_gcs(data, blob_name):
     storage_client = storage.Client()
     bucket = storage_client.bucket(BUCKET_NAME)
     blob = bucket.blob(blob_name)
-
-    # Mode can be specified as wb/rb for bytes mode.
-    # See: https://docs.python.org/3/library/io.html
     with blob.open("wb") as f:
         f.write(data)
 
@@ -80,7 +77,7 @@ def hello_content(request):
 def load_people(request):
     resp = urlopen(f'{BASE_URL}/biofile.zip')
     write_to_gcs(resp.read(), 'biofile.zip')
-    
+
     myzip = zipfile.ZipFile(BytesIO(resp.read()))
     print(myzip.namelist())
     with myzip as z:
@@ -126,6 +123,8 @@ def load_people(request):
 @functions_framework.http
 def load_ballparks(request):
     resp = urlopen(f'{BASE_URL}/ballparks.zip')
+    write_to_gcs(resp.read(), 'ballparks.zip')
+
     myzip = zipfile.ZipFile(BytesIO(resp.read()))
     print(myzip.namelist())
     with myzip as z:
@@ -151,6 +150,8 @@ def load_ballparks(request):
 @functions_framework.http
 def load_teams(request):
     resp = urlopen(f'{BASE_URL}/teams.zip')
+    write_to_gcs(resp.read(), 'teams.zip')
+
     myzip = zipfile.ZipFile(BytesIO(resp.read()))
     print(myzip.namelist())
     with myzip as z:
