@@ -125,6 +125,7 @@ def load_ballparks(request):
     resp = urlopen(f'{BASE_URL}/ballparks.zip')
     write_to_gcs(resp.read(), 'ballparks.zip')
 
+    resp = urlopen(f'{BASE_URL}/ballparks.zip')
     myzip = zipfile.ZipFile(BytesIO(resp.read()))
     print(myzip.namelist())
     with myzip as z:
@@ -152,6 +153,7 @@ def load_teams(request):
     resp = urlopen(f'{BASE_URL}/teams.zip')
     write_to_gcs(resp.read(), 'teams.zip')
 
+    resp = urlopen(f'{BASE_URL}/teams.zip')
     myzip = zipfile.ZipFile(BytesIO(resp.read()))
     print(myzip.namelist())
     with myzip as z:
