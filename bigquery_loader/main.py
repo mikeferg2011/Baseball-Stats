@@ -5,9 +5,11 @@ from io import BytesIO
 import pandas as pd
 import pandas_gbq
 from markupsafe import escape
+from google.cloud import storage
 
 BASE_URL = 'https://www.retrosheet.org'
 PROJECT_ID = 'baseball-434918'
+BUCKET_NAME = 'retrosheets'
 
 
 def convert_num_to_date(df_series):
@@ -15,6 +17,16 @@ def convert_num_to_date(df_series):
     temp_series = pd.to_datetime(temp_series, format="%Y%m%d", errors='coerce')
     temp_series = temp_series.dt.date.astype('str').replace('NaT', None)
     return (temp_series)
+
+def write_to_gcs(data, blob_name):
+    storage_client = storage.Client()
+    bucket = storage_client.bucket(BUCKET_NAME)
+    blob = bucket.blob(blob_name)
+
+    # Mode can be specified as wb/rb for bytes mode.
+    # See: https://docs.python.org/3/library/io.html
+    with blob.open("wb") as f:
+        f.write(data)
 
 
 @functions_framework.http
@@ -67,6 +79,8 @@ def hello_content(request):
 @functions_framework.http
 def load_people(request):
     resp = urlopen(f'{BASE_URL}/biofile.zip')
+    write_to_gcs(resp.read(), 'biofile.zip')
+    
     myzip = zipfile.ZipFile(BytesIO(resp.read()))
     print(myzip.namelist())
     with myzip as z:

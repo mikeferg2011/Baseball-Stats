@@ -2,3 +2,4 @@ pandas
 requests
 pandas_gbq
 functions-framework
+google-cloud-storage
