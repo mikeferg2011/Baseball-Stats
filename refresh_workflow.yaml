@@ -33,9 +33,6 @@
       value: year
       range: [1960, 2023]
       steps:
-        - assignFile:
-            assign:
-              - file_name: ${"events/" + year + "eve.zip"}
         - getYear:
             call: http.post
             args:
@@ -43,6 +40,6 @@
               headers:
                 Content-Type: application/json
               body:
-                file_path: ${file_name}
+                file_path: ${"events/" + string(year) + "eve.zip"}
               auth:
                 type: OIDC
