@@ -23,8 +23,9 @@ def fetch_file(request):
         if request_json and "file_path" in request_json:
             file_path = request_json["file_path"]
         else:
-            raise ValueError("JSON is invalid, or missing a 'name' property")
+            raise ValueError("JSON is invalid, or missing a 'file_path' property")
     else:
         raise ValueError(f"Content type requires 'application/json' but given '{content_type}'")
     resp = urlopen(f'{BASE_URL}/{file_path}')
     write_to_gcs(resp.read(), file_path)
+    return f"{file_path} loaded to {BUCKET_NAME} bucket"
