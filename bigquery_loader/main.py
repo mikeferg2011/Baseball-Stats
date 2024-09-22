@@ -73,6 +73,7 @@ def process_zip(request):
     myzip = read_zip_gcs(file_path)
     df, mode = RetroParser(zip_bytes=myzip, zip_type=file_type)
     pandas_gbq.to_gbq(df, f'retrosheets.{file_type}', project_id=PROJECT_ID, if_exists=mode)
+    return f'{file_path} loaded successfully'
 
 
 # @functions_framework.http
