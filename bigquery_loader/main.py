@@ -4,7 +4,7 @@ import zipfile
 from io import BytesIO
 import pandas as pd
 import pandas_gbq
-from markupsafe import escape
+# from markupsafe import escape
 from google.cloud import storage
 
 BASE_URL = 'https://www.retrosheet.org'
@@ -18,67 +18,48 @@ def convert_num_to_date(df_series):
     temp_series = temp_series.dt.date.astype('str').replace('NaT', None)
     return (temp_series)
 
-def write_to_gcs(data, blob_name):
+
+def read_zip_gcs(blob_name):
     storage_client = storage.Client()
     bucket = storage_client.bucket(BUCKET_NAME)
     blob = bucket.blob(blob_name)
-    with blob.open("wb") as f:
-        f.write(data)
+    myzip = zipfile.ZipFile(BytesIO(blob.download_as_string()))
+    return(myzip)
 
 
-@functions_framework.http
-def hello_get(request):
-    """HTTP Cloud Function.
-    Args:
-        request (flask.Request): The request object.
-        <https://flask.palletsprojects.com/en/1.1.x/api/#incoming-request-data>
-    Returns:
-        The response text, or any set of values that can be turned into a
-        Response object using `make_response`
-        <https://flask.palletsprojects.com/en/1.1.x/api/#flask.make_response>.
-    Note:
-        For more information on how Flask integrates with Cloud
-        Functions, see the `Writing HTTP functions` page.
-        <https://cloud.google.com/functions/docs/writing/http#http_frameworks>
-    """
-    return "Hello World!"
-
-@functions_framework.http
-def hello_content(request):
-    """Responds to an HTTP request using data from the request body parsed
-    according to the "content-type" header.
-    Args:
-        request (flask.Request): The request object.
-        <https://flask.palletsprojects.com/en/1.1.x/api/#incoming-request-data>
-    Returns:
-        The response text, or any set of values that can be turned into a
-        Response object using `make_response`
-        <https://flask.palletsprojects.com/en/1.1.x/api/#flask.make_response>.
-    """
-    content_type = request.headers["content-type"]
-    if content_type == "application/json":
-        request_json = request.get_json(silent=True)
-        if request_json and "name" in request_json:
-            name = request_json["name"]
-        else:
-            raise ValueError("JSON is invalid, or missing a 'name' property")
-    elif content_type == "application/octet-stream":
-        name = request.data
-    elif content_type == "text/plain":
-        name = request.data
-    elif content_type == "application/x-www-form-urlencoded":
-        name = request.form.get("name")
-    else:
-        raise ValueError(f"Unknown content type: {content_type}")
-    return f"Hello {escape(name)}!"
+# @functions_framework.http
+# def hello_content(request):
+#     """Responds to an HTTP request using data from the request body parsed
+#     according to the "content-type" header.
+#     Args:
+#         request (flask.Request): The request object.
+#         <https://flask.palletsprojects.com/en/1.1.x/api/#incoming-request-data>
+#     Returns:
+#         The response text, or any set of values that can be turned into a
+#         Response object using `make_response`
+#         <https://flask.palletsprojects.com/en/1.1.x/api/#flask.make_response>.
+#     """
+#     content_type = request.headers["content-type"]
+#     if content_type == "application/json":
+#         request_json = request.get_json(silent=True)
+#         if request_json and "name" in request_json:
+#             name = request_json["name"]
+#         else:
+#             raise ValueError("JSON is invalid, or missing a 'name' property")
+#     elif content_type == "application/octet-stream":
+#         name = request.data
+#     elif content_type == "text/plain":
+#         name = request.data
+#     elif content_type == "application/x-www-form-urlencoded":
+#         name = request.form.get("name")
+#     else:
+#         raise ValueError(f"Unknown content type: {content_type}")
+#     return f"Hello {escape(name)}!"
 
 
 @functions_framework.http
 def load_people(request):
-    resp = urlopen(f'{BASE_URL}/biofile.zip')
-    write_to_gcs(resp.read(), 'biofile.zip')
-
-    myzip = zipfile.ZipFile(BytesIO(resp.read()))
+    myzip = read_zip_gcs('biofile.zip')
     print(myzip.namelist())
     with myzip as z:
         # open the csv file in the dataset
@@ -122,11 +103,7 @@ def load_people(request):
 
 @functions_framework.http
 def load_ballparks(request):
-    resp = urlopen(f'{BASE_URL}/ballparks.zip')
-    write_to_gcs(resp.read(), 'ballparks.zip')
-
-    resp = urlopen(f'{BASE_URL}/ballparks.zip')
-    myzip = zipfile.ZipFile(BytesIO(resp.read()))
+    myzip = read_zip_gcs('ballparks.zip')
     print(myzip.namelist())
     with myzip as z:
         # open the csv file in the dataset
@@ -150,11 +127,7 @@ def load_ballparks(request):
 
 @functions_framework.http
 def load_teams(request):
-    resp = urlopen(f'{BASE_URL}/teams.zip')
-    write_to_gcs(resp.read(), 'teams.zip')
-
-    resp = urlopen(f'{BASE_URL}/teams.zip')
-    myzip = zipfile.ZipFile(BytesIO(resp.read()))
+    myzip = read_zip_gcs('teams.zip')
     print(myzip.namelist())
     with myzip as z:
         # open the csv file in the dataset
