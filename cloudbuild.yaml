@@ -74,5 +74,13 @@ steps:
 #   - --entry-point=load_teams
 #   - --service-account=baseball-prod@baseball-434918.iam.gserviceaccount.com
 #   - --run-service-account=baseball-prod@baseball-434918.iam.gserviceaccount.com
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  args:
+  - gcloud
+  - workflows
+  - deploy
+  - refresh_workflow
+  - --source=refresh_workflow.yaml
+  - --service-account=baseball-prod@baseball-434918.iam.gserviceaccount.com
 options:
   logging: CLOUD_LOGGING_ONLY

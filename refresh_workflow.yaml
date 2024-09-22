@@ -1,0 +1,12 @@
+- getTeams:
+    call: http.post
+    args:
+      url: https://retrosheet-fetcher-6919421047.us-central1.run.app
+      body:
+        file_path: 'teams.zip'
+- getBios:
+    call: http.post
+    args:
+      url: https://retrosheet-fetcher-6919421047.us-central1.run.app
+      body:
+        file_path: 'biofile.zip'
