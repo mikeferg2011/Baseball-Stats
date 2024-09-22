@@ -12,6 +12,20 @@ steps:
   - --entry-point=fetch_file
   - --service-account=baseball-prod@baseball-434918.iam.gserviceaccount.com
   - --run-service-account=baseball-prod@baseball-434918.iam.gserviceaccount.com
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  args:
+  - gcloud
+  - functions
+  - deploy
+  - load_bq
+  - --region=us-central1
+  - --source=./bigquery_loader
+  - --trigger-http
+  - --runtime=python311
+  - --entry-point=process_zip
+  - --service-account=baseball-prod@baseball-434918.iam.gserviceaccount.com
+  - --run-service-account=baseball-prod@baseball-434918.iam.gserviceaccount.com
+  - --memory=512MB
 # - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
 #   args:
 #   - gcloud
@@ -25,46 +39,46 @@ steps:
 #   - --entry-point=hello_content
 #   - --service-account=baseball-prod@baseball-434918.iam.gserviceaccount.com
 #   - --run-service-account=baseball-prod@baseball-434918.iam.gserviceaccount.com
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  args:
-  - gcloud
-  - functions
-  - deploy
-  - load_people
-  - --region=us-central1
-  - --source=./bigquery_loader
-  - --trigger-http
-  - --runtime=python311
-  - --entry-point=load_people
-  - --service-account=baseball-prod@baseball-434918.iam.gserviceaccount.com
-  - --run-service-account=baseball-prod@baseball-434918.iam.gserviceaccount.com
-  - --memory=512MB
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  args:
-  - gcloud
-  - functions
-  - deploy
-  - load_ballparks
-  - --region=us-central1
-  - --source=./bigquery_loader
-  - --trigger-http
-  - --runtime=python311
-  - --entry-point=load_ballparks
-  - --service-account=baseball-prod@baseball-434918.iam.gserviceaccount.com
-  - --run-service-account=baseball-prod@baseball-434918.iam.gserviceaccount.com
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  args:
-  - gcloud
-  - functions
-  - deploy
-  - load_teams
-  - --region=us-central1
-  - --source=./bigquery_loader
-  - --trigger-http
-  - --runtime=python311
-  - --entry-point=load_teams
-  - --service-account=baseball-prod@baseball-434918.iam.gserviceaccount.com
-  - --run-service-account=baseball-prod@baseball-434918.iam.gserviceaccount.com
+# - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+#   args:
+#   - gcloud
+#   - functions
+#   - deploy
+#   - load_people
+#   - --region=us-central1
+#   - --source=./bigquery_loader
+#   - --trigger-http
+#   - --runtime=python311
+#   - --entry-point=load_people
+#   - --service-account=baseball-prod@baseball-434918.iam.gserviceaccount.com
+#   - --run-service-account=baseball-prod@baseball-434918.iam.gserviceaccount.com
+#   - --memory=512MB
+# - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+#   args:
+#   - gcloud
+#   - functions
+#   - deploy
+#   - load_ballparks
+#   - --region=us-central1
+#   - --source=./bigquery_loader
+#   - --trigger-http
+#   - --runtime=python311
+#   - --entry-point=load_ballparks
+#   - --service-account=baseball-prod@baseball-434918.iam.gserviceaccount.com
+#   - --run-service-account=baseball-prod@baseball-434918.iam.gserviceaccount.com
+# - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+#   args:
+#   - gcloud
+#   - functions
+#   - deploy
+#   - load_teams
+#   - --region=us-central1
+#   - --source=./bigquery_loader
+#   - --trigger-http
+#   - --runtime=python311
+#   - --entry-point=load_teams
+#   - --service-account=baseball-prod@baseball-434918.iam.gserviceaccount.com
+#   - --run-service-account=baseball-prod@baseball-434918.iam.gserviceaccount.com
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   args:
   - gcloud
