@@ -21,7 +21,7 @@
 - get2020s:
     for:
       value: year
-      range: [2020, 2023]
+      range: [1960, 2023]
       steps:
         - assignFile:
             assign:
