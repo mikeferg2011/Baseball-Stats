@@ -1,12 +1,12 @@
 - getTeams:
     call: http.post
     args:
-      url: https://retrosheet-fetcher-6919421047.us-central1.run.app
+      url: https://us-central1-baseball-434918.cloudfunctions.net/retrosheet_fetcher
       body:
         file_path: 'teams.zip'
 - getBios:
     call: http.post
     args:
-      url: https://retrosheet-fetcher-6919421047.us-central1.run.app
+      url: https://us-central1-baseball-434918.cloudfunctions.net/retrosheet_fetcher
       body:
         file_path: 'biofile.zip'
