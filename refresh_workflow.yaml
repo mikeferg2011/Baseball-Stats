@@ -4,9 +4,13 @@
       url: https://us-central1-baseball-434918.cloudfunctions.net/retrosheet_fetcher
       body:
         file_path: 'teams.zip'
+      auth:
+        type: OIDC
 - getBios:
     call: http.post
     args:
       url: https://us-central1-baseball-434918.cloudfunctions.net/retrosheet_fetcher
       body:
         file_path: 'biofile.zip'
+      auth:
+        type: OIDC
