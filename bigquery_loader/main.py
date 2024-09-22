@@ -71,7 +71,7 @@ def process_zip(request):
     else:
         raise ValueError(f"Content type requires 'application/json' but given '{content_type}'")
     myzip = read_zip_gcs(file_path)
-    df, mode = RetroParser(zip_bytes=myzip, zip_type=file_type)
+    df, mode = RetroParser(zip_bytes=myzip, zip_type=file_type).process()
     pandas_gbq.to_gbq(df, f'retrosheets.{file_type}', project_id=PROJECT_ID, if_exists=mode)
     return f'{file_path} loaded successfully'
 
