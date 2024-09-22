@@ -2,6 +2,8 @@
     call: http.post
     args:
       url: https://us-central1-baseball-434918.cloudfunctions.net/retrosheet_fetcher
+      headers:
+        Content-Type: application/json
       body:
         file_path: 'teams.zip'
       auth:
@@ -10,6 +12,8 @@
     call: http.post
     args:
       url: https://us-central1-baseball-434918.cloudfunctions.net/retrosheet_fetcher
+      headers:
+        Content-Type: application/json
       body:
         file_path: 'biofile.zip'
       auth:
