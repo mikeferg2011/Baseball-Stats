@@ -5,7 +5,7 @@ declare -a arr=("cloudresourcemanager.googleapis.com"
                 "cloudfunctions.googleapis.com"
                 "cloudbuild.googleapis.com"
                 "secretmanager.googleapis.com"
-               #  "run.googleapis.com"
+                "run.googleapis.com"
                 )
 
 ## now loop through the above array
