@@ -49,7 +49,7 @@ class BaseParser(ABC):
 class BallparkParser(BaseParser):
 
     def __init__(self, blob_name, tbl_dest='ballparks', write_mode='replace'):
-        super().__init__(self, blob_name, tbl_dest, write_mode)
+        super().__init__(blob_name, tbl_dest, write_mode)
 
     def process(self):
         with self.zip as z:
@@ -75,7 +75,7 @@ class BallparkParser(BaseParser):
 
 class PeopleParser(BaseParser):
     def __init__(self, blob_name, tbl_dest='bios', write_mode='replace'):
-        super().__init__(self, blob_name, tbl_dest, write_mode)
+        super().__init__(blob_name, tbl_dest, write_mode)
 
     def process(self):
         with self.zip as z:
@@ -124,7 +124,7 @@ class PeopleParser(BaseParser):
 
 class TeamsParser(BaseParser):
     def __init__(self, blob_name, tbl_dest="teams", write_mode="replace"):
-        super().__init__(self, blob_name, tbl_dest, write_mode)
+        super().__init__(blob_name, tbl_dest, write_mode)
 
     def process(self):
         with self.zip as z:
